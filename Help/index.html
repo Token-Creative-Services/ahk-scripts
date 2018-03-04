@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Timelapse - Social Media RPA</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="theme.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Timelapse - Social RPA</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#ig">Instagram</a></li>
+            <li><a href="#cf">CrowdFire</a></li>
+			<li><a href="#util">Utilities</a></li>
+			<li><a href="#util">Support</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main upper area -->
+      <div class="jumbotron">
+        <h1>Timelapse Help</h1>
+        <p>This documenation will guide any rep on the use and practices of running Timelapse scirpts for social media RPA. Scripts are organized by tool category, and then contain options/inputs for bulk-account use. Most scripts run with hot-keys, so be sure to familiarize yourself with all of them!</p>
+		<h3>
+			WARNING: These scripts are very powerful, and if run incorrectly will result in account(s) easily getting banned. Start SLOW!! 
+		</h3>
+      </div>
+	  
+	  <!-- Instagram on Bluestacks area -->
+      <div class="page-header">
+        <h1>Getting Started</h1>
+		<div class="well">
+			<p>There are several scripts that will run based on pre-installed and configured apps. Be sure you download and prepare all apps prior to running any scripts! We <em>*HIGHLY*</em> recommend ensuring both your Display Settings(Windows) & Browser Zoom levels are at 100% (neutral).<em>Many scripts contain inputs to specify the # of accounts you wish to run in-bulk</em></p>
+			<p><strong>AutoHotKey -</strong> Required for running all scripts. <a href="https://autohotkey.com/download/">Download</a></p>
+			<p><strong>Bluestacks -</strong> For running scripts on instagram, we opt to run through a VM app called Bluestakcs. You must down,install, and log into your Instagram app in Bluestacks in order to run Instagram Scripts! <a href="http://www.bluestacks.com/download.html">Download</a></p>
+			<p><strong>CrowdFire -</strong> No download require for this one. Ensure you have accessed the CrowdFire app <strong>before</strong> running scripts, as you will need to be authenticated first. Access <a href="https://www.crowdfireapp.com">here</a></p>
+			<p><strong>Deployement Package -</strong> To get the scripts running, download and deploy the scripts package to "<strong>C:\Program Files\</strong>". These be downloaded <a href="https://drive.google.com/drive/folders/0B1EXiUX5jWvEWlZ6NElfX2NnZ0k?usp=sharing">here</a></p>
+			<p><strong>Android Apps -</strong><a href="https://play.google.com/store/apps/details?id=com.applisto.appcloner&hl=en">App Duplicator</a><a href="https://play.google.com/store/apps/details?id=com.lbe.parallel.intl&hl=en">Parallel Space</a></p>
+		</div>
+	  </div>
+
+	  <!-- Instagram on Bluestacks area -->
+      <div class="page-header">
+		<a name="ig"></a>
+        <h1>Instagram</h1>
+      </div>
+      <div class="alert alert-success" role="alert">
+        <strong>Instagram @ Bluestacks - IG running inside of the bluestacks VMware</strong>
+      </div>
+	  <div class="row">
+        <div class="col-sm-4">
+			<div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Follow</h3>
+            </div>
+            <div class="panel-body">
+              <p>Follows a series of new profiles from the top accounts of profiles you are already following.</p>
+			 <p><strong>Requirement:</strong> Bluestacks is open and running, with Instagram app in focus, maximized.</p>
+			 <p><strong>Input:</strong>The number of accounts logged into instagram (max 5).</p>
+			 <p><strong>HotKeys:</strong> [~] to Exit the app. | [TAB] to Pause </p>
+            </div>
+          </div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Follow-PS</h3>
+            </div>
+            <div class="panel-body">
+				<p>Specifically designed for Parallel Space version of Instagram app. Follows a series of new profiles from the top accounts of profiles you are already following.</p>
+				<p><strong>Requirement:</strong> Bluestacks is open and running, with Parallel Space running IG in focus, maximized.</p>
+				<p><strong>Input:</strong>The number of accounts logged into instagram (max 5).</p>
+			 <p><strong>HotKeys:</strong> [~] to Exit the app. | [TAB] to Pause </p>
+            </div>
+          </div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Like</h3>
+            </div>
+            <div class="panel-body">
+				<p>Likes 3 pictures of various profiles, from the most recent accounts you are already following.</p>
+				<p><strong>Requirement:</strong> Bluestacks is open and running, with Instagram app in focus, maximized.</p>
+				<p><strong>Input:</strong>The number of accounts logged into instagram (max 5).</p>
+              <p><strong>HotKeys:</strong> [~] to Exit the app. | [TAB] to Pause </p>
+            </div>
+          </div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="panel panel-success">
+				<div class="panel-heading">
+				  <h3 class="panel-title">Like-PS</h3>
+				</div>
+				<div class="panel-body">
+					<p>Specifically designed for Parallel Space version of Instagram app.Likes 3 pictures of various profiles, from the most recent accounts you are already following.</p>
+					<p><strong>Requirement:</strong> Bluestacks is open and running, with Parallel Space running IG in focus, maximized.</p>
+					<p><strong>Input:</strong>The number of accounts logged into instagram (max 5).</p>
+				  <p><strong>HotKeys:</strong> [~] to Exit the app. | [TAB] to Pause </p>
+				</div>
+			  </div>
+			</div>
+		</div>
+	  </div>
+
+	  <!-- CrowdFire through a website -->
+	  <div class="page-header">
+		<a name="cf"></a>
+        <h1>CrowdFire</h1>
+      </div>
+	   <div class="alert alert-info" role="alert">
+        <strong>Crowdfire @ WebApp - Main CF app run through a Chrome web browser</strong> 
+      </div>
+	  <div class="row">
+        <div class="col-sm-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Unfollow</h3>
+				</div>
+				<div class="panel-body">
+					<p>Unfollow the max hourly allowed accounts from the non-followers list.</p>
+					<p><strong>Requirement:</strong>Google Chrome is installed. When open and running, should be maximized.</p>
+					<p><strong>Input:</strong>The number of accounts logged into Parallel space.</p>
+					<p><strong>HotKeys:</strong> [~] to Exit the app. | [TAB] to Pause </p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Like</h3>
+				</div>
+				<div class="panel-body">
+					<p>Likes many pictures through the admirers list of accounts engaging in your content.</p>
+					<p><strong>Requirement:</strong>Google Chrome is installed. When open and running, should be maximized.</p>
+					<p><strong>Input:</strong>The number of accounts logged into Parallel space.</p>
+					<p><strong>HotKeys:</strong> [~] to Exit the app. | [TAB] to Pause </p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Follow Fans</h3>
+				</div>
+				<div class="panel-body">
+					<p>Follows several new accounts through the fan list of accounts following you whom you do not follow back.</p>
+					<p><strong>Requirement:</strong>Google Chrome is installed. When open and running, should be maximized.</p>
+					<p><strong>Input:</strong>The number of accounts logged into Parallel space.</p>
+					<p><strong>HotKeys:</strong> [~] to Exit the app. | [TAB] to Pause </p>
+				</div>
+			</div>
+		</div>
+	</div>
+	  
+	  <!-- Utility scripts -->
+	  <div class="page-header">
+	  <a name="util"></a>
+        <h1>Utilities</h1>
+      </div>
+	  <div class="alert alert-warning" role="alert">
+        <strong>Utilities</strong> All purpose scripts designed for every day life
+      </div>
+	  	  <div class="row">
+        <div class="col-sm-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h3 class="panel-title">X/Y Finder</h3>
+				</div>
+				<div class="panel-body">This script is run and toggled with the <strong>[CAPS-LOCK]</strong> key. When enabled, it will display the X/Y cooridantes of your current mouse position. Press <strong>[PRINT SCREEN]</strong> to save to clipboard</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h3 class="panel-title">Get Colour</h3>
+				</div>
+				<div class="panel-body">When <strong>[Control]+[Alt]+[Z]</strong> are pressed, the colour beneath the mouse's current location is pulled. Displays Hex RGB colour code </div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h3 class="panel-title">Auto-Clicker</h3>
+				</div>
+				<div class="panel-body">When running, script is toggled with <strong>[F6]</strong> key to click on the current mouse location at a high interval.</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="page-header">
+		<a name="help"></a>
+		<h1>Support / Troubleshooting</h1>
+		<div class="well"> 
+		<p>If you are unable to get things working, or have suggestions for new script ideas, contact the developer team via. All support inquiries go to dev.</p>
+		<p><em>If you receives errors due to screen resolution, try changing your display settings to something standard such as 1920x1080.</em></p>
+		</div>
+    </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="assets/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

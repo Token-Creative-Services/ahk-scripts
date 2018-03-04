@@ -1,0 +1,506 @@
+ ; DESCRIPTION:      This class hosts all details about Instagram running with blueStacks directly
+ ; Last Updated:     12/11/2016
+ ; ----------------------------------------------------
+ ; ----------------------------------------------------
+class InstagramBS{
+	;// ATTRIBUTES OF CLASS
+	;// Location of profile (bottom-right most) button
+	 x_profileButton :=
+	 y_profileButton :=
+	 ;// Location of home (bottom-left most) button
+	 x_homeButton :=
+	 y_homeButton :=
+	 ;// Location of search (bottom left) button
+	 x_searchButton :=
+	 y_searchButton :=
+	 ;// Location of activity (bottom right) button
+	 x_activityFeed :=
+	 y_activityFeed :=
+	 ;// Location of followers list
+	x_followersList :=
+	y_followersList :=
+	 ;// Location of where the user profile clicks are in the follower's list
+	x_firstProfileFollower :=
+	y_firstProfileFollower :=
+	x_secondProfileFollower :=
+	y_secondProfileFollower :=
+	x_thirdProfileFollower :=
+	y_thirdProfileFollower :=
+	x_forthProfileFollower :=
+	y_forthProfileFollower :=
+	x_fifthProfileFollower :=
+	y_fifthProfileFollower :=
+	x_sixthProfileFollower :=
+	y_sixthProfileFollower :=
+	x_seventhProfileFollower :=
+	y_seventhProfileFollower :=
+	x_eighthProfileFollower :=
+	y_eighthProfileFollower :=
+	;//Location of the profile in IG to switch between (logged-in accounts). Max = 5
+	x_profileDropDown :=
+	y_profileDropDown :=
+	;FIRST PROFILE IS ALWAYS SELECT BY DEFAULT WHEN LAUNCHING IG APP
+	x_firstAccount :=
+	y_firstAccount :=
+	x_secondAccount :=
+	y_secondAccount :=
+	x_thirdAccount :=
+	y_thirdAccount :=
+	x_forthAccount :=
+	y_forthAccount :=
+	x_fifthAccount :=
+	y_fifthAccount :=
+	 ;// location of pictures in user's main page
+	x_firstPicSelect :=
+	y_firstPicSelect :=
+	x_secondPicSelect :=
+	y_secondPicSelect :=
+	x_thirdPicSelect :=
+	y_thirdPicSelect :=
+	 ;//LIKE location (to double click at)
+	 x_likeLocation := ; Passed to likePicture function
+	 y_likeLocation := ; Passed to likePicture function
+	 ;// Go back button
+	x_goBackButton := ; Passed to goBackClick function
+	y_goBackButton := ; Passed to goBackClick function
+	;//location of similar profiles drop down
+	x_similarProfileDropDown :=
+	y_similarProfileDropDown :=
+	;//Where the followButton is (inside the similar profile feed)
+	x_followButtonInAccountFeed := 
+	y_followButtonInAccountFeed :=
+	;//Time optomization for click events
+	time_FollowerListLoad := ; load time for list of followers
+	time_ProfilePageLoad := ; load time for profile page of a user
+	time_PictureLoad := ; load time for a picture
+	time_doubleClickWaitInverval := ; how long to wait between click events to simulate a double click
+	time_goBackWait := ; How long to wait after going back
+	time_searchExplorePageLoad :=  ;load time for the search/explore page
+	time_homePageLoad :=  ;load time for homepage/feed
+	time_activityFeedPageLoad :=  ;load time for activityFeed page
+	time_ProfilePageSwapLoad := ; when changing profile's of logged in users, load time it takes to load the switching-to profile page
+	time_loggedInProfileDropDownListLoad := ; how long the profile drop down of accounts
+	time_similarProfilesDropDownLoad := ;how long it takes for the similar profile's drop down to load a feed of accounts
+	time_SimilarProfileFeedClickFollowSlide := ;how long it takes the similar profile feed to slide to the next profile after a click. HOW FAST do you want to click (in loop scenario)
+	; These are GLOBALLY STATIC across all profiles for this class(so we assign defaults)
+	title_blueStacksWindow := "BlueStacks App Player" ; Name of the blueStacks Window
+	colour_profilePicAreaBackground := "0xFFFFFF" ;The blank space colour on a profile (like if an image post square wasnt filled with an image (prepended 0x)
+	colour_followButtonAreaBackground := "0x3897F0" ;Colour of the blue follow button
+	;Rate limiters.
+	rate_maxFollowPerProfile := "25" ;How many accounts do we follow in the feed
+	rate_maxHourlyFollow := "200" ;How many follows can we do in total per hour, per account
+	
+	
+	;Function that will actually go ahead and create the error log
+	; Writes: Date/time,  e.What (what happened), e.File (where it happened), e.Line (where in the file it threw)
+	;NOTE: Script must be running as an admin for this to function (Program Files is an admin-only dir)
+	createErrorLogEvent(message, line)
+	{
+		;Set the path of where we save to
+		logFilePath := % A_ProgramFiles . "\Token\Automation\logs\log.csv"
+		;Set the date/time the event is happening at
+		FormatTime, CurrentDateTime,, yyyy/MM/dd HH:mm:ss
+		;TRY to open the log file
+		try { 		
+			file := FileOpen(logFilePath, "a") ; Opens log file in append mode
+		}
+		catch e{
+			MsgBox, Log file could not be found/opened. Attempted to output to: %logFilePath% e.What
+			Exit
+		}
+		try {
+			msgBox, Error detected. Please check the logs.
+			file.Write(CurrentDateTime), file.Write(",") ;date
+			file.Write(message), file.Write(",") ;message
+			file.Write(A_LineFile), file.Write(",") ;failing file
+			file.Write(line), file.Write(",") ; failed line
+			file.Write("`r" ) ; newline
+			file.fileClose()
+		}
+		catch e{
+			MsgBox, Log file could written to. Attempted to write to: %logFilePath%
+			Exit
+		}
+	}
+	
+	; Set the dimensions of the IGClass X/Ys, based on the predefined resolutions/locations for: JORDAN SNIDER
+	; Validation: Was the value of one of these variables accuretly defined?
+	SetToJSniderLaptop() 
+	{
+		try {
+			This.x_profileButton := "1195"
+			This.y_profileButton := "1060"
+			This.x_homeButton := "730"
+			This.y_homeButton := "1060"
+			This.x_searchButton := "845"
+			This.y_searchButton := "1060"
+			This.x_activityFeed := "1075"
+			This.y_activityFeed := "1060"
+			This.x_followersList := "1160"
+			This.y_followersList := "146"
+			This.x_firstProfileFollower := "755"
+			This.y_firstProfileFollower := "140"
+			This.x_secondProfileFollower := "755"
+			This.y_secondProfileFollower := "193"
+			This.x_thirdProfileFollower := "755"
+			This.y_thirdProfileFollower := "246"
+			This.x_forthProfileFollower := "755"
+			This.y_forthProfileFollower := "280"
+			This.x_fifthProfileFollower := "755"
+			This.y_fifthProfileFollower := "337"
+			This.x_sixthProfileFollower := "755"
+			This.y_sixthProfileFollower := "385"
+			This.x_seventhProfileFollower := "755"
+			This.y_seventhProfileFollower := "440"
+			This.x_eighthProfileFollower := "755"
+			This.y_eighthProfileFollower := "500"
+			This.x_profileDropDown := "730"
+			This.y_profileDropDown := "85"
+			This.x_firstAccount := "730"
+			This.y_firstAccount := "119"
+			This.x_secondAccount := "728"
+			This.y_secondAccount := "164"
+			This.x_thirdAccount := "728"
+			This.y_thirdAccount := "208"
+			This.x_forthAccount := "728"
+			This.y_forthAccount := "252"
+			This.x_fifthAccount := "728"
+			This.y_fifthAccount := "298"
+			This.x_firstPicSelect := "770"
+			This.y_firstPicSelect := "680"			
+			This.x_secondPicSelect := "956"
+			This.y_secondPicSelect := "680"
+			This.x_thirdPicSelect := "1150"
+			This.y_thirdPicSelect := "680"
+			This.x_likeLocation := "1100"
+			This.y_likeLocation := "356"
+			This.x_goBackButton := "686"
+			This.y_goBackButton := "77"
+			This.x_similarProfileDropDown := "1225"
+			This.y_similarProfileDropDown := "175"
+			This.x_followButtonInAccountFeed := "774"
+			This.y_followButtonInAccountFeed := "393"
+			This.time_FollowerListLoad := "2000"
+			This.time_ProfilePageLoad := "2000"
+			This.time_ProfilePageSwapLoad := "10000"
+			This.time_PictureLoad := "1000"
+			This.time_doubleClickWaitInverval := "100"
+			This.time_goBackWait := "100"
+			This.time_searchExplorePageLoad := "3000"
+			This.time_homePageLoad := "3000"
+			This.time_activityFeedPageLoad := "3000"
+			This.time_loggedInProfileDropDownListLoad := "2000"
+			This.time_similarProfilesDropDownLoad := "3000"
+			This.time_SimilarProfileFeedClickFollowSlide := "400" ; Used as Test case in method validation (below)***
+			
+			;// Validation: If something we attempt to set does not equal what we expect it to
+			if(This.time_SimilarProfileFeedClickFollowSlide != 400) {
+				throw { what: "Error establishing profile values for SetToJSniderLaptop()", file: A_LineFile, line: A_LineNumber }
+			}
+		}
+		catch e{
+			This.createErrorLogEvent(e.What, e.line)
+			Exit
+		}
+	}
+	
+	; Using the title of the BlueStacks window, make it active/force it into view
+	; Validation: Is the currently active window what we actually attempt to set things to?
+	activateBlueStacksWindow()
+	{
+		/*WinWait, % This.title_blueStacksWindow
+		IfWinNotActive, % This.title_blueStacksWindow , WinActivate, % This.title_blueStacksWindow, 
+		WinWaitActive, % This.title_blueStacksWindow, 
+		*/
+		try {
+			WinActivate, % This.title_blueStacksWindow,
+			WinWaitActive, % This.title_blueStacksWindow, 
+			if !WinActive(This.title_blueStacksWindow) {
+				throw { what: "Failure activating window via activateBlueStacksWindow()", file: A_LineFile, line: A_LineNumber }
+			}
+		}
+		catch e{
+			This.createErrorLogEvent(e.What, e.line)
+			Exit
+		}
+	}
+	; Click profile button(bottom right-most button) to ensure you are on the right page
+	clickProfileButton()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left, % This.x_profileButton,  % This.y_profileButton
+		Sleep, % This.time_ProfilePageLoad
+	}
+	; Click home button(bottom left-most button)
+	clickHomeButton()
+	 {
+		This.activateBlueStacksWindow()
+		MouseClick, left, % This.x_homeButton,  % This.y_homeButton
+		Sleep, % This.time_homePageLoad
+	}
+	; Click the search/explore button
+	clickSearchButton()
+	 {
+		This.activateBlueStacksWindow()
+		MouseClick, left, % This.x_searchButton,  % This.y_searchButton
+		Sleep, % This.time_searchExplorePageLoad
+	}
+	; Click the acitivity 
+	clickActivityButton()
+	 {
+		This.activateBlueStacksWindow()
+		MouseClick, left, % This.x_activityFeed,  % This.y_activityFeed
+		Sleep, % This.time_activityFeedPageLoad
+	}
+	; Click Following List on logged in user's account
+	clickFollowingList()
+	 {
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_followersList,  % This.y_followersList
+		Sleep, % This.time_FollowerListLoad
+	}
+	; Double click action to like a specific picture
+	likePicture()
+	{
+		Sleep, % This.time_PictureLoad
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_likeLocation,  % This.y_likeLocation ;Like location
+		Sleep, % This.time_doubleClickWaitInverval
+		MouseClick, left,  % This.x_likeLocation,  % This.y_likeLocation ;Like location
+		MouseClick, left,  % This.x_likeLocation,  % This.y_likeLocation ;Like location
+		Sleep, % This.time_doubleClickWaitInverval
+	}
+	; Click event to find and click the 'GoBack' button
+	goBackToProfileClick()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_goBackButton,  % This.y_goBackButton
+		Sleep, % This.time_ProfilePageLoad
+	}
+	; Click event to find and click the 'GoBack' button
+	goBackToFollowerListClick()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_goBackButton,  % This.y_goBackButton
+		Sleep, % This.time_FollowerListLoad	
+	}
+	; Click into the profile of the FIRST user in the list of user's currently being followed (Following list)
+	clickFirstProfileFollower()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_firstProfileFollower,  % This.y_firstProfileFollower
+		Sleep, % This.time_ProfilePageLoad ; Profile page load time
+	}
+	; Click into the profile of the SECOND user in the list of user's currently being followed (Following list)
+	clickSecondProfileFollower()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_secondProfileFollower,  % This.y_secondProfileFollower
+		Sleep, % This.time_ProfilePageLoad ; Profile page load time
+	}
+	; Click into the profile of the THIRD user in the list of user's currently being followed (Following list)
+	clickThirdProfileFollower()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_thirdProfileFollower,  % This.y_thirdProfileFollower
+		Sleep, % This.time_ProfilePageLoad ; Profile page load time
+	}
+	; Click into the profile of the FORTH user in the list of user's currently being followed (Following list)
+	clickForthProfileFollower()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_forthProfileFollower,  % This.y_forthProfileFollower
+		Sleep, % This.time_ProfilePageLoad ; Profile page load time
+	}
+	; Click into the profile of the FIFTH user in the list of user's currently being followed (Following list)
+	clickFifthProfileFollower()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_fifthProfileFollower,  % This.y_fifthProfileFollower
+		Sleep, % This.time_ProfilePageLoad ; Profile page load time
+	}
+	; Click into the profile of the SIXTH user in the list of user's currently being followed (Following list)
+	clickSixthProfileFollower()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_sixthProfileFollower,  % This.y_sixthProfileFollower
+		Sleep, % This.time_ProfilePageLoad ; Profile page load time
+	}
+	; Click into the profile of the SEVENTH user in the list of user's currently being followed (Following list)
+	clickSeventhProfileFollower()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_seventhProfileFollower,  % This.y_seventhProfileFollower
+		Sleep, % This.time_ProfilePageLoad ; Profile page load time
+	}
+	; Click into the profile of the EIGHTH user in the list of user's currently being followed (Following list)
+	clickEighthProfileFollower()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left,  % This.x_eighthProfileFollower,  % This.y_eighthProfileFollower
+		Sleep, % This.time_ProfilePageLoad ; Profile page load time
+	}
+	
+	; Click first pic on user profile page
+	; Validation: Is the expected click location a blank space? If so, dont click and continue with script
+	clickFirstPic()
+	 {
+		This.activateBlueStacksWindow()
+			PixelGetColor, expectedClickLocation, % This.X_firstPicSelect, % This.y_firstPicSelec, RGB ;Look to see if the pic location is blank
+			IfEqual, expectedClickLocation,  % This.colour_profilePicAreaBackground ;if the first pic IS blank, we just want to skip it
+			{
+				return 0 ;exit method and continue with next action
+			}
+			else 
+			{
+				This.activateBlueStacksWindow()
+				MouseClick, left,  % This.X_firstPicSelect,  % This.y_firstPicSelec ;First pic location
+				Sleep, % This.time_PictureLoad ;picutre load time
+				return 1 ;return 1 (successful click)
+			}
+	 }
+	 
+	; Click second pic on user profile page
+	; Validation: Is the expected click location a blank space? If so, dont click and continue with script
+	clickSecondPic()
+	 {
+		PixelGetColor, expectedClickLocation, % This.X_firstPicSelect, % This.y_firstPicSelec, RGB ;Look to see if the pic location is blank
+		IfEqual, expectedClickLocation,  % This.colour_profilePicAreaBackground ;if the first pic IS blank, we just want to skip it
+		{
+			return 0 ;exit method and continue with next action
+		}
+		else 
+		{
+			This.activateBlueStacksWindow()
+			MouseClick, left,  % This.x_secondPicSelect,  % This.y_secondPicSelect ;First pic location
+			Sleep, % This.time_PictureLoad ;picutre load time
+			return 1 ;return 1 (successful click)
+		}
+	 }
+	; Click third pic on user profile page
+	; Validation: Is the expected click location a blank space? If so, dont click and continue with script
+	  clickThirdPic()
+	 {
+		PixelGetColor, expectedClickLocation, % This.X_firstPicSelect, % This.y_firstPicSelec, RGB ;Look to see if the pic location is blank
+		IfEqual, expectedClickLocation,  % This.colour_profilePicAreaBackground ;if the first pic IS blank, we just want to skip it
+		{
+			return 0 ;exit method and continue with next action
+		}
+		else 
+		{
+			This.activateBlueStacksWindow()
+			MouseClick, left,  % This.x_thirdPicSelect,  % This.y_thirdPicSelect ;First pic location
+			Sleep, % This.time_PictureLoad ;picutre load time
+			return 1 ;return 1 (successful click)
+		}
+	 }
+	; On profile, take three pic and like them
+	; Theory: This method can be called to like the 3 pics on a profile that is already loaded/present on screen
+	 like3PicsOnUserAccount()
+	 {
+		global
+		; select [FIRST] pic
+		 If This.clickFirstPic() = 1
+		{
+			; like it
+			 This.likePicture()
+			; go back to profil page
+			 This.goBackToProfileClick
+		}
+
+		 ; select [SECOND] picture
+		If This.clickSecondPic() = 1
+		{
+			; like it
+			 This.likePicture()
+			; go back to profil page
+			 This.goBackToProfileClick()
+		}
+
+		 ; select [THIRD] pic
+		If This.clickThirdPic() =1 
+		{
+			; like it
+			 This.likePicture()
+			; go back to profil page
+			 This.goBackToProfileClick()
+			; go back to follower list
+		}
+		This.goBackToFollowerListClick()
+	 }
+	 
+	; Switch account to the [SECOND] logged in profile within the IG app
+	clickSecondLoggedInAccount()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left, % This.x_profileDropDown, % This.y_profileDropDown ; Click the logged in profiles drop down list
+		Sleep, % This.time_loggedInProfileDropDownListLoad ; Wait for the drop down of the profiles currently logged
+		MouseClick, left,  % This.x_secondAccount,  % This.y_secondAccount ;Click where the profile button is
+		Sleep, % This.time_ProfilePageSwapLoad ;profile load time when chaning profiles
+	}
+	
+	; Switch account to the [THIRD] logged in profile within the IG app
+	clickThirdLoggedInAccount()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left, % This.x_profileDropDown, % This.y_profileDropDown ; Click the logged in profiles drop down list
+		Sleep, % This.time_loggedInProfileDropDownListLoad ; Wait for the drop down of the profiles currently logged
+		MouseClick, left,  % This.x_thirdAccount,  % This.y_thirdAccount ;Click where the profile button is
+		Sleep, % This.time_ProfilePageSwapLoad ;profile load time when chaning profiles
+	}
+	; Switch account to the [FORTH] logged in profile within the IG app
+	clickForthLoggedInAccount()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left, % This.x_profileDropDown, % This.y_profileDropDown ; Click the logged in profiles drop down list
+		Sleep, % This.time_loggedInProfileDropDownListLoad ; Wait for the drop down of the profiles currently logged
+		MouseClick, left,  % This.x_forthAccount,  % This.y_forthAccount ;Click where the profile button is
+		Sleep, % This.time_ProfilePageSwapLoad ;profile load time when chaning profiles
+	}
+	; Switch account to the [FIFTH] logged in profile within the IG app
+	clickFifthLoggedInAccount()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left, % This.x_profileDropDown, % This.y_profileDropDown ; Click the logged in profiles drop down list
+		Sleep, % This.time_loggedInProfileDropDownListLoad ; Wait for the drop down of the profiles currently logged
+		MouseClick, left,  % This.x_fifthAccount,  % This.y_fifthAccount ;Click where the profile button is
+		Sleep, % This.time_ProfilePageSwapLoad ;profile load time when chaning profiles
+	}
+	
+	; Click the similar profiles drop down on another user's main profile page
+	clickSimilarProfileDropDown()
+	{
+		This.activateBlueStacksWindow()
+		MouseClick, left, % This.x_similarProfileDropDown, % This.y_similarProfileDropDown ; Click the logged in profiles drop down list
+		Sleep, % This.time_similarProfilesDropDownLoad ;loading time of the dropdown feed of accounts
+	}	
+	
+	; From the drop down list of a user's main page, click the follow button (on the first account) inside the feed
+	clickFollowButtonInAccountFeed()
+	{
+		This.activateBlueStacksWindow()
+		PixelGetColor, expectedFollowClickLocation, % This.x_followButtonInAccountFeed, % This.y_followButtonInAccountFeed, RGB ;Look to see if the follow button is click-able
+
+		IfEqual, expectedFollowClickLocation,  % This.colour_followButtonAreaBackground ;if the colour is blue (to indicate we can follow), we click to follow
+		{
+			This.activateBlueStacksWindow()
+			MouseClick, left, % This.x_followButtonInAccountFeed, % This.y_followButtonInAccountFeed ; Click the follow button in the activity list
+			Sleep, % This.time_SimilarProfileFeedClickFollowSlide ;loading time of the follow button slide
+			
+			return 1 ;return 1 (successful click)
+		}
+		return 0 ;at the end, no matter a follow was pressed or not, return so loops can continue
+	}
+	
+	;From a user's profile page, click the drop down and follow as many accounts as the max allows for
+	;Combining clickSimilarProfileDropDown() && clickFollowButtonInAccountFeed()
+	clickAndFollowFromProfilePageFeed()
+	{
+		This.clickSimilarProfileDropDown()
+		Loop % This.rate_maxFollowPerProfile { 
+			This.clickFollowButtonInAccountFeed()
+		}
+		This.goBackToFollowerListClick()
+	}
+	
+}
